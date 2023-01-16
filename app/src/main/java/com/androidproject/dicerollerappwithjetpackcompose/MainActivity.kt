@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,15 +47,17 @@ fun DiceRollerAppWithImageAndButton(
         mutableStateOf(1)
     }
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        val image = when (result) {
-            1 -> painterResource(id = R.drawable.dice_1)
-            2 -> painterResource(id = R.drawable.dice_2)
-            3 -> painterResource(id = R.drawable.dice_3)
-            4 -> painterResource(id = R.drawable.dice_4)
-            5 -> painterResource(id = R.drawable.dice_5)
-            else -> painterResource(id = R.drawable.dice_6)
+        val (image: Painter, value: String) = when (result) {
+            1 -> Pair((painterResource(id = R.drawable.dice_1)), "1")
+            2 -> Pair(painterResource(id = R.drawable.dice_2), "2")
+            3 -> Pair(painterResource(id = R.drawable.dice_3), "3")
+            4 -> Pair(painterResource(id = R.drawable.dice_4), "4")
+            5 -> Pair(painterResource(id = R.drawable.dice_5), "5")
+            else -> {
+                Pair((painterResource(id = R.drawable.dice_6)), "6")
+            }
         }
-        Image(painter = image, contentDescription = "Number 1")
+        Image(painter = image, contentDescription = value)
         Spacer(modifier = Modifier.height(30.dp))
         Button(onClick = { result = (1..6).random() }) {
             Text(text = "Click Here")
